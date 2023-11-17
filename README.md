@@ -34,8 +34,6 @@ Spark SQL is a Spark module for structured data processing. Unlike the basic Spa
             <artifactId>spark-core_2.13</artifactId>
             <version>3.4.1</version>
         </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.apache.spark/spark-sql -->
         <dependency>
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-sql_2.13</artifactId>
@@ -134,7 +132,7 @@ df.groupBy(year(col("Date")).alias("year")).count().orderBy(col("count").desc())
 
 ![image](https://github.com/el-moudni-hicham/bigdata-spark-sql/assets/85403056/80354378-c621-45ac-8f09-a12ea7eed294)
 
-##H Hopital Database
+### Hopital Database
 
  Create MySQL database named DB_HOPITAL, which contains three tables 
  
@@ -181,7 +179,7 @@ df1.groupBy(col("DATE_CONSULTATION").alias("day")).count().show();
 ![image](https://github.com/el-moudni-hicham/bigdata-spark-sql/assets/85403056/9dfd46f1-5606-46d7-91d8-b24a300b631c)
 
 
-Display the number of consultations per doctor. The display format is as follows:
+* Display the number of consultations per doctor. The display format is as follows:
 
 `NAME | SURNAME | NUMBER OF CONSULTATIONS`
 
@@ -191,7 +189,8 @@ Display the number of consultations per doctor. The display format is as follows
 
         Dataset<Row> joinedDF = dfMedicins
                 .join(dfConsultations, dfMedicins.col("id").equalTo(dfConsultations.col("id_medecin")), "inner")
-                .select(dfMedicins.col("nom"), dfMedicins.col("prenom"), dfConsultations.col("count").alias("NOMBRE DE CONSULTATION"))
+                .select(dfMedicins.col("nom"), dfMedicins.col("prenom"),
+                 dfConsultations.col("count").alias("NOMBRE DE CONSULTATION"))
                 .orderBy(col("NOMBRE DE CONSULTATION").desc());
 
         joinedDF.show();
