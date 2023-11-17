@@ -14,7 +14,9 @@ public class IncidentsSQL {
 
         //df.show();
 
-        df.groupBy("Service").count().show();
+        Dataset<Row> df1 = df.groupBy("Service").count();
+        df1.select(col("Service"), col("count").alias("Incidents Count")).show();
+
         df.groupBy(year(col("Date")).alias("year")).count().orderBy(col("count").desc()).limit(2).show();
     }
 }

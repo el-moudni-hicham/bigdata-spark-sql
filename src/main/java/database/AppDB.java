@@ -25,15 +25,16 @@ public class AppDB {
                 //.option("table","table_name")
                 .option("query","select * from consultations")
                 .load();
-
-        //df.show();
-        //df1.groupBy(col("DATE_CONSULTATION").alias("day")).count().show();
-
-
         Dataset<Row> df2 = ss.read().format("jdbc")
                 .options(option)
                 .option("query","select * from medecins")
                 .load();
+
+        //df1.show();
+        df1.groupBy(col("DATE_CONSULTATION").alias("day")).count().show();
+
+
+
 
         Dataset<Row> dfConsultations = df1.groupBy(col("id_medecin")).count();
         Dataset<Row> dfMedicins = df2.select("id","nom","prenom");
