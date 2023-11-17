@@ -14,7 +14,7 @@ public class IncidentsSQL {
 
         //df.show();
 
-        //df.groupBy("Service").count().show();
+        df.groupBy("Service").count().show();
         df.groupBy(year(col("Date")).alias("year")).count().orderBy(col("count").desc()).limit(2).show();
     }
 }
