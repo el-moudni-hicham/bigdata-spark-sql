@@ -47,12 +47,16 @@ Spark SQL is a Spark module for structured data processing. Unlike the basic Spa
 
 ### Products SQL
 
+We want to develop a Spark application for Products.
+
+The products are stored in a CSV file.
+
+![image](https://github.com/el-moudni-hicham/bigdata-spark-sql/assets/85403056/5a8c3ffa-3748-4dce-b16c-051d1029f8b6)
+
 ```java
 SparkSession ss = SparkSession.builder().appName("Products SQL").master("local[*]").getOrCreate();
 Dataset<Row> df = ss.read().option("multiline", true).json("src/main/resources/products.json");
 ```
-
-![image](https://github.com/el-moudni-hicham/bigdata-spark-sql/assets/85403056/5a8c3ffa-3748-4dce-b16c-051d1029f8b6)
 
 ```java
 df.show();
