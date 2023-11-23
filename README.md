@@ -204,3 +204,11 @@ df1.groupBy(col("DATE_CONSULTATION").alias("day")).count().show();
 
 ![image](https://github.com/el-moudni-hicham/bigdata-spark-sql/assets/85403056/a20eaf6d-cdaf-4864-a2e9-8122f7724aab)
 
+* Display for each doctor the number of patients he has attended:
+
+```java
+Dataset<Row> dfMedPat = df1.select("id_medecin", "id_patient");
+dfMedPat.groupBy(col("id_medecin").alias("Medecin")).agg(countDistinct("id_patient").as("Number of patients")).show();
+```
+
+![image](https://github.com/el-moudni-hicham/bigdata-spark-sql/assets/85403056/4859c0c0-aba0-4b46-8c54-67373d1f027e)
