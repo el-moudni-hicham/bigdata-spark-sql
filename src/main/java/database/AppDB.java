@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.apache.spark.sql.functions.col;
+import static org.apache.spark.sql.functions.countDistinct;
 
 
 public class AppDB {
@@ -30,12 +31,13 @@ public class AppDB {
                 .option("query","select * from medecins")
                 .load();
 
-        //df1.show();
+
+        // q1
         df1.groupBy(col("DATE_CONSULTATION").alias("day")).count().show();
 
 
 
-
+        // q2
         Dataset<Row> dfConsultations = df1.groupBy(col("id_medecin")).count();
         Dataset<Row> dfMedicins = df2.select("id","nom","prenom");
 
@@ -44,10 +46,14 @@ public class AppDB {
                 .select(dfMedicins.col("nom"), dfMedicins.col("prenom"), dfConsultations.col("count").alias("NOMBRE DE CONSULTATION"))
                 .orderBy(col("NOMBRE DE CONSULTATION").desc());
 
+        joinedDF.withColumnRenamed("nom","NOM");
+        joinedDF.withColumnRenamed("prenom","PRENOM");
+
         joinedDF.show();
 
+        // q3
 
-
-
+        Dataset<Row> dfMedPat = df1.select("id_medecin", "id_patient");
+        dfMedPat.groupBy(col("id_medecin").alias("Medecin")).agg(countDistinct("id_patient").as("Number of patients")).show();
     }
 }
